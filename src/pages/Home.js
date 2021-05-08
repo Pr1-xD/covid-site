@@ -1,7 +1,122 @@
 import React from 'react';
 import Nav from '../components/Nav'
 
+
 function Home() {
+
+        var gapi = window.gapi
+        let id;
+        /* 
+          Update with your own Client Id and Api key 
+        */
+        var CLIENT_ID = "795034839651-mtpdd4f1lk2e6tdaj736o4rbn2r6cl8a.apps.googleusercontent.com"
+        var API_KEY = "AIzaSyCv6i6tz0cyUsb9fJhIhmHsSuuz4U3Zw_Y"
+        var DISCOVERY_DOCS = ["https://www.googleapis.com/discovery/v1/apis/calendar/v3/rest"]
+        var SCOPES = "https://www.googleapis.com/auth/calendar.events"
+      
+        const handleClick = () => {
+            console.log('Clicked')
+          gapi.load('client:auth2', () => {
+            console.log('loaded client')
+      
+            gapi.client.init({
+              apiKey: API_KEY,
+              clientId: CLIENT_ID,
+              discoveryDocs: DISCOVERY_DOCS,
+              scope: SCOPES,
+            })
+      
+            gapi.client.load('calendar', 'v3', () => console.log('bam!'))
+      
+            gapi.auth2.getAuthInstance().signIn()
+            .then(() => {
+              
+            //   var event = {
+            //     'summary': 'Awesome Event!',
+            //     'location': '800 Howard St., San Francisco, CA 94103',
+            //     'description': 'Really great refreshments',
+            //     'start': {
+            //       'dateTime': '2021-06-28T09:00:00-07:00',
+            //       'timeZone': 'America/Los_Angeles'
+            //     },
+            //     'end': {
+            //       'dateTime': '2021-06-28T17:00:00-07:30',
+            //       'timeZone': 'America/Los_Angeles'
+            //     },
+            //     'recurrence': [
+            //       'RRULE:FREQ=DAILY;COUNT=2'
+            //     ],
+            //     'attendees': [
+            //       {'email': 'abhinav20016@gmail.com'},
+            //       {'email': 'sbrin@example.com'}
+            //     ],
+            //     'reminders': {
+            //       'useDefault': false,
+            //       'overrides': [
+            //         {'method': 'email', 'minutes': 24 * 60},
+            //         {'method': 'popup', 'minutes': 10}
+            //       ]
+            //     },
+            //     "conferenceData": {
+            //         "createRequest": {
+            //           "conferenceSolutionKey": {
+            //             "type": "hangoutsMeet"
+            //           },
+            //           "requestId": "test"
+            //         }
+            //       }
+            //   }
+      
+            //   var request = gapi.client.calendar.events.insert({
+            //     'calendarId': 'primary',
+            //     'resource': event,
+            //   })
+      
+            //   request.execute(event => {
+            //     console.log(event)
+            //     console.log(event.id)
+            //     id=event.id
+            //   })
+
+              var eventPatch = {
+                conferenceData: {
+                  createRequest: {requestId: "7qxalsvy0e"}
+                }
+              };
+              
+              gapi.client.calendar.events.patch({
+                calendarId: "primary",
+                eventId: "lmql17sbub62t47rvs2js4gf98",
+                resource: eventPatch,
+                sendNotifications: true,
+                conferenceDataVersion: 1
+              }).execute(function(event) {
+                console.log("Conference created for event: %s", event.htmlLink);
+              });
+              
+      
+              /*
+                  Uncomment the following block to get events
+              */
+              /*
+              // get events
+              gapi.client.calendar.events.list({
+                'calendarId': 'primary',
+                'timeMin': (new Date()).toISOString(),
+                'showDeleted': false,
+                'singleEvents': true,
+                'maxResults': 10,
+                'orderBy': 'startTime'
+              }).then(response => {
+                const events = response.result.items
+                console.log('EVENTS: ', events)
+              })
+              */
+          
+      
+            })
+          })
+        }
     return (
         <div>
            <Nav/>
@@ -45,6 +160,7 @@ function Home() {
                 </div>
             </div>
             </section>
+            <button class="inline-flex text-white bg-black border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded text-lg" onClick={handleClick}>Start Meet</button>
         </div>
     );
 }

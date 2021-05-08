@@ -11,7 +11,7 @@ function Login(props) {
     }
 
     const onSuccess = (res) =>{
-        console.log(res.profileObj.imageUrl,res.profileObj.name)
+        console.log(res)
         setLoginInfo(true,res.profileObj.name,res.profileObj.imageUrl)
     }
     const onFailure = (res) =>{
@@ -31,6 +31,7 @@ function Login(props) {
            cookiePolicy={'single_host_origin'}
            isSignedIn={false}
            theme='dark'
+           scope='https://www.googleapis.com/auth/calendar'
            />
         </div>
     )
