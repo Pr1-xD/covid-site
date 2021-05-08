@@ -32,7 +32,7 @@ function Resources() {
                                         placeholder="Your Email"  value={value} onChange={(e)=>{handleChange(e)}} />
                                     <button
                                         class="flex items-center w-full px-6 py-2 font-semibold text-white transition duration-500 ease-in-out transform bg-black rounded-lg lg:w-auto hover:bg-gray-900 focus:shadow-outline focus:outline-none focus:ring-2 ring-offset-current ring-offset-2">
-                                        <a href={"https://www.twitter.com/search?q="+value+" verified"}>Action</a>
+                                        <a href={"https://www.twitter.com/search?q="+value+"verified"}>Action</a>
                                     </button>
                                 </div>
                                 <p class="w-full mt-2 mb-8 text-sm text-left text-gray-600">

@@ -6,9 +6,13 @@ const clientID= '795034839651-mtpdd4f1lk2e6tdaj736o4rbn2r6cl8a.apps.googleuserco
 
 function Login(props) {
 
+    function setLoginInfo(val1,val2,val3){
+        props.setLoginInfo(val1,val2,val3)
+    }
 
     const onSuccess = (res) =>{
-        console.log(res.profileObj.email,res.profileObj.name)
+        console.log(res.profileObj.imageUrl,res.profileObj.name)
+        setLoginInfo(true,res.profileObj.name,res.profileObj.imageUrl)
     }
     const onFailure = (res) =>{
         console.log(res)
