@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Nav from '../components/Nav'
+import axios from 'axios'
 
 
 function Home() {
-
+        const[evid,setEvid]=useState()
         var gapi = window.gapi
         let id;
         /* 
@@ -31,70 +32,71 @@ function Home() {
             gapi.auth2.getAuthInstance().signIn()
             .then(() => {
               
-            //   var event = {
-            //     'summary': 'Awesome Event!',
-            //     'location': '800 Howard St., San Francisco, CA 94103',
-            //     'description': 'Really great refreshments',
-            //     'start': {
-            //       'dateTime': '2021-06-28T09:00:00-07:00',
-            //       'timeZone': 'America/Los_Angeles'
-            //     },
-            //     'end': {
-            //       'dateTime': '2021-06-28T17:00:00-07:30',
-            //       'timeZone': 'America/Los_Angeles'
-            //     },
-            //     'recurrence': [
-            //       'RRULE:FREQ=DAILY;COUNT=2'
-            //     ],
-            //     'attendees': [
-            //       {'email': 'abhinav20016@gmail.com'},
-            //       {'email': 'sbrin@example.com'}
-            //     ],
-            //     'reminders': {
-            //       'useDefault': false,
-            //       'overrides': [
-            //         {'method': 'email', 'minutes': 24 * 60},
-            //         {'method': 'popup', 'minutes': 10}
-            //       ]
-            //     },
-            //     "conferenceData": {
-            //         "createRequest": {
-            //           "conferenceSolutionKey": {
-            //             "type": "hangoutsMeet"
-            //           },
-            //           "requestId": "test"
-            //         }
-            //       }
-            //   }
+              var event = {
+                'summary': 'Awesome Event!',
+                'location': '800 Howard St., San Francisco, CA 94103',
+                'description': 'Really great refreshments',
+                'start': {
+                  'dateTime': '2021-06-28T09:00:00-07:00',
+                  'timeZone': 'America/Los_Angeles'
+                },
+                'end': {
+                  'dateTime': '2021-06-28T17:00:00-07:30',
+                  'timeZone': 'America/Los_Angeles'
+                },
+                'recurrence': [
+                  'RRULE:FREQ=DAILY;COUNT=2'
+                ],
+                'attendees': [
+                  {'email': 'abhinav20016@gmail.com'},
+                  {'email': 'sbrin@example.com'}
+                ],
+                'reminders': {
+                  'useDefault': false,
+                  'overrides': [
+                    {'method': 'email', 'minutes': 24 * 60},
+                    {'method': 'popup', 'minutes': 10}
+                  ]
+                },
+                "conferenceData": {
+                    "createRequest": {
+                      "conferenceSolutionKey": {
+                        "type": "hangoutsMeet"
+                      },
+                      "requestId": "test"
+                    }
+                  }
+              }
       
-            //   var request = gapi.client.calendar.events.insert({
-            //     'calendarId': 'primary',
-            //     'resource': event,
-            //   })
-      
-            //   request.execute(event => {
-            //     console.log(event)
-            //     console.log(event.id)
-            //     id=event.id
-            //   })
-
-              var eventPatch = {
-                conferenceData: {
-                  createRequest: {requestId: "7qxalsvy0e"}
+              var request = gapi.client.calendar.events.insert({
+                "calendarId": "primary",
+                "conferenceDataVersion": 1,
+                "resource": {
+                  "end": {
+                    "date": "2021-6-25"
+                  },
+                  "start": {
+                    "date": "2021-6-24"
+                  },
+                  "conferenceData": {
+                    "createRequest": {
+                      "conferenceSolutionKey": {
+                        "type": "hangoutsMeet"
+                      },
+                      "requestId": "some-random-string"
+                    }
+                  },
+                  "summary": "titles are cool"
                 }
-              };
-              
-              gapi.client.calendar.events.patch({
-                calendarId: "primary",
-                eventId: "lmql17sbub62t47rvs2js4gf98",
-                resource: eventPatch,
-                sendNotifications: true,
-                conferenceDataVersion: 1
-              }).execute(function(event) {
-                console.log("Conference created for event: %s", event.htmlLink);
-              });
-              
+              })
       
+              request.execute(event => {
+                console.log(event)
+                setEvid(event.id)
+              })
+
+              
+
               /*
                   Uncomment the following block to get events
               */
@@ -116,6 +118,41 @@ function Home() {
       
             })
           })
+        }
+        function createMeet(){
+          var eventPatch = {
+            conferenceData: {
+              createRequest: {requestId: "7qxalsvy0e"}
+            }
+          };
+          
+          gapi.client.calendar.events.patch({
+            calendarId: "primary",
+            eventId: "lmql17sbub62t47rvs2js4gf98",
+            resource: eventPatch,
+            sendNotifications: true,
+            conferenceDataVersion: 1
+          }).execute(function(event) {
+            console.log(event.result.hangoutLink);
+
+          });
+          // gapi.client.calendar.events.list({
+          //   'calendarId': 'primary',
+          //   'timeMin': (new Date()).toISOString(),
+          //   'showDeleted': false,
+          //   'singleEvents': true,
+          //   'maxResults': 10,
+          //   'orderBy': 'startTime'
+          // }).then(response => {
+          //   const events = response.result.items
+          //   console.log('EVENTS: ', events)
+          // })
+             
+          // axios.get('https://www.googleapis.com/calendar/v3/calendars/primary/events/'+evid)
+          // .then(response => {
+          //   console.log(response);
+          // });
+           
         }
     return (
         <div>
@@ -160,7 +197,8 @@ function Home() {
                 </div>
             </div>
             </section>
-            <button class="inline-flex text-white bg-black border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded text-lg" onClick={handleClick}>Start Meet</button>
+            <button class="inline-flex text-white bg-black border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded text-lg" onClick={handleClick}>Start Event</button>
+            <button class="inline-flex text-white bg-black border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded text-lg" onClick={createMeet}>Start Meet</button>
         </div>
     );
 }

@@ -3,6 +3,7 @@ import Home from './pages/Home'
 import Resources from './pages/Resources'
 import Chatbot from './pages/Chatbot'
 import Doctors from './pages/Doctors'
+import Appointment from './pages/Appointment'
 import './App.css';
 import "tailwindcss/tailwind.css"
 
@@ -14,6 +15,7 @@ function App() {
           <Route path="/resources" component={Resources} />
           <Route path="/chatbot" component={Chatbot} />
           <Route path="/doctors" component={Doctors} />
+          <Route path="/appointment" component={Appointment} />
       </Switch>
 
     </div>
