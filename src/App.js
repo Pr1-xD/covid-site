@@ -8,7 +8,7 @@ import "tailwindcss/tailwind.css"
 
 function App() {
   return (
-    <div className="App ">
+    <div className="App font-inter">
       <Switch>
           <Route path="/" component={Home} exact />
           <Route path="/resources" component={Resources} />
