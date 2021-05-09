@@ -3,6 +3,7 @@ import { useState } from 'react';
 import Nav from '../components/Nav'
 import RoboLogo from '../robot.svg';
 import UserLogo from '../user.svg';
+import axios from 'axios'
 
 function Chatbot() {
     const [arr,setArr]=useState([])
