@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import Nav from '../components/Nav'
+import Homesvg2 from '../home2.svg';
 
 function Resources() {
     const [value,setValue]=useState('')
@@ -13,11 +14,14 @@ function Resources() {
             <br/>
             <br/>
             <br/>
+            <br/>
+            <br/>
+            <br/>
              <section class="text-gray-700 ">
                         <div
                             class="container flex flex-col items-start px-5 py-16 mx-auto lg:items-center md:flex-row lg:px-28">
                             <div class="w-full mb-10 lg:w-5/6 lg:max-w-lg md:w-1/2">
-                                <img class="object-cover object-center rounded" alt="hero" src="https://dummyimage.com/720x600/F3F4F7/8693ac" />
+                                <img class="object-cover object-center rounded" alt="hero" src={Homesvg2} />
                             </div>
                             <div class="flex flex-col items-start text-left lg:flex-grow md:w-1/2 lg:pl-24 md:pl-16">
                                 <h1 class="mb-8 text-2xl font-bold tracking-tighter text-black lg:text-left lg:text-5xl title-font">
@@ -32,7 +36,7 @@ function Resources() {
                                         placeholder="Your Email"  value={value} onChange={(e)=>{handleChange(e)}} />
                                     <button
                                         class="flex items-center w-full px-6 py-2 font-semibold text-white transition duration-500 ease-in-out transform bg-black rounded-lg lg:w-auto hover:bg-gray-900 focus:shadow-outline focus:outline-none focus:ring-2 ring-offset-current ring-offset-2">
-                                        <a href={"https://www.twitter.com/search?q="+value+"verified"}>Action</a>
+                                        <a href={"https://www.twitter.com/search?q="+value+" verified"}>Action</a>
                                     </button>
                                 </div>
                                 <p class="w-full mt-2 mb-8 text-sm text-left text-gray-600">
