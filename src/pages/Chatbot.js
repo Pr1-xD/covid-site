@@ -60,9 +60,11 @@ function Chatbot() {
             console.log(arr)
          }   
          if(cnt==11){
-            setUserMsg([...userMsg,{ from: 1, msg: inpVal },{from:0,msg:"Over"}])
-             setArr([...arr,ageRes(inpVal)])
+            setUserMsg([...userMsg,{ from: 1, msg: inpVal },{from:0,msg:"Thank You, Please wait for results."}])
+            // tempArr=arr.concat(ageRes(inpVal))
+             setArr(arr.concat(ageRes(inpVal)))
              console.log(arr)
+             mlCall(arr)
          }   
         }      
      
@@ -89,6 +91,19 @@ function Chatbot() {
         return [0,0,0,1,0]
         if(val>=60)
         return [0,0,0,0,1]
+    }
+
+    function mlCall(){
+        axios.post('link', arr)
+          .then((response) => {
+            console.log(response);
+            if(response==1)
+            setUserMsg([...userMsg,{ from: 1, msg: inpVal },{from:0,msg:"You may have COVID according to our data, please consult a doctor."}])
+            if(response==0)
+            setUserMsg([...userMsg,{ from: 1, msg: inpVal },{from:0,msg:"You seem to be safe from COVID, stay safe!"}])
+          }, (error) => {
+            console.log(error);
+          });
     }
 
     function chatbotGen(obj){
